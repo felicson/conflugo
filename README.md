@@ -1,4 +1,4 @@
-CONFLUGO: help to synchronize repository documentation with confluence
+CONFLUGO: help to synchronize repository documentation with Atlassian confluence
 ---
 
 To build tool with credentials use the following arguments.
