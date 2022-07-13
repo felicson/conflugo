@@ -16,11 +16,9 @@ type ConfluenceDocument struct {
 	Prefix      string
 }
 
-// todo: do suffix configurable
-const docDirectory = "doc"
+const docDirectory = "doc" // todo: do suffix configurable
 
 func WikiByPath(path string) (*ConfluenceDocument, error) {
-
 	var (
 		attachments []string
 		prefix      string

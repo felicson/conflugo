@@ -16,7 +16,6 @@ const (
 )
 
 func MakeSuffix(ancestorID string) (string, error) {
-
 	ancHex := hex.EncodeToString([]byte(ancestorID))
 
 	hd := hashids.HashIDData{

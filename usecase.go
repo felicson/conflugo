@@ -9,8 +9,8 @@ import (
 	"strings"
 
 	"github.com/felicson/conflugo/internal"
-	"github.com/felicson/conflugo/internal/storage"
-	"github.com/felicson/conflugo/internal/storage/model"
+	"github.com/felicson/conflugo/internal/confluence"
+	"github.com/felicson/conflugo/internal/confluence/model"
 	"github.com/felicson/conflugo/internal/utils"
 )
 
@@ -23,8 +23,8 @@ const (
 	readme = "README.md"
 )
 
-//Sync entrypoint to usecase
-func Sync(ctx context.Context, storage *storage.Storage, ancestorID string) error {
+// Sync entrypoint to use case.
+func Sync(ctx context.Context, storage *confluence.Storage, ancestorID string) error {
 	ancestorID = strings.Trim(ancestorID, " \n")
 
 	if _, err := os.Stat(readme); errors.Is(err, os.ErrNotExist) {
@@ -49,7 +49,7 @@ func Sync(ctx context.Context, storage *storage.Storage, ancestorID string) erro
 		existingChild []model.Document
 	)
 
-	//first step finding a root node in defined ancestor tree
+	// first step finding a root node in defined ancestor tree
 	docs, err := storage.FindDocumentsByParent(ctx, ancestorID, findParent)
 	if err != nil {
 		return fmt.Errorf("on find parent document: %v", err)
@@ -73,7 +73,7 @@ func Sync(ctx context.Context, storage *storage.Storage, ancestorID string) erro
 			return err
 		}
 	}
-	//step two handle child documents
+	// step two handle child documents
 	childReadme, err := handleDocDirectory(suffix)
 
 	if err != nil {
@@ -83,7 +83,7 @@ func Sync(ctx context.Context, storage *storage.Storage, ancestorID string) erro
 	for i, doc := range existingChild {
 		readme, ok := childReadme[doc.Title]
 		if !ok {
-			//place for delete existing document logic in confluence
+			// place for delete existing document logic in confluence
 			continue
 		}
 		confDoc, err := internal.WikiByPath(readme.Path)

@@ -18,7 +18,7 @@ build:fmt
 
 
 lint: lint_install ## Lint the source files
-	golangci-lint run --timeout 5m -E revive -E rowserrcheck -E sqlclosecheck -E gosec # -E goerr113
+	golangci-lint run --timeout 5m
 
 lint_install:
 	@which golangci-lint || go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.37.1

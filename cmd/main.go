@@ -7,7 +7,8 @@ import (
 	"os"
 
 	"github.com/felicson/conflugo"
-	"github.com/felicson/conflugo/internal/storage"
+	"github.com/felicson/conflugo/internal/confluence"
+	"github.com/felicson/conflugo/internal/confluence/client"
 )
 
 var (
@@ -18,9 +19,7 @@ var (
 )
 
 func main() {
-
 	ancestorFile := "confluence.ancestor"
-
 	if _, err := os.Stat(ancestorFile); errors.Is(err, os.ErrNotExist) {
 		return
 	}
@@ -29,14 +28,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	storage := storage.Storage{
-		Login:    ConfluenceLogin,
-		Password: ConfluencePassword,
+	c := confluence.Storage{
 		SpaceKey: ConfluenceSpace,
 		URL:      ConfluenceURL,
+		Client:   client.NewBasicClient(ConfluenceLogin, ConfluencePassword),
 	}
 
-	if err := conflugo.Sync(context.TODO(), &storage, string(ancestor)); err != nil {
+	if err := conflugo.Sync(context.TODO(), &c, string(ancestor)); err != nil {
 		log.Fatal(err)
 	}
 }
