@@ -3,7 +3,9 @@ CONFLUGO: help to synchronize repository documentation with Atlassian confluence
 
 To build tool with credentials use the following arguments.
 ```bash
-go build -ldflags '-X main.ConfluenceLogin=login -X main.ConfluencePassword=password -X main.ConfluenceSpace=ME -X main.ConfluenceURL=https://example.com' cmd/main.go
+go build \ 
+  -ldflags '-X main.ConfluenceLogin=login -X main.ConfluencePassword=password -X main.ConfluenceSpace=ME -X main.ConfluenceURL=https://example.com' \ 
+  cmd/main.go
 ```
 
 ### How it works!
@@ -12,6 +14,8 @@ On starting conflugo check the `confluence.ancestor` file in current directory.
 File should contain the ancestor ID as a parent node for new documents tree.
 
 If the file doesn't exist program will quiet with zero code.
+
+This software was designed to be used inside the CI part, so we suggest that you provide configuration options during the build phase of the binary.
 
 ## Requirements
 |File|Description|
